@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>BC Vote</title>
 
     <!-- Bootstrap -->
@@ -39,42 +38,40 @@
  ============================-->
 <header id="header">
     <div class="container">
-
         <div id="logo" class="pull-left">
-            <!-- Uncomment below if you prefer to use a text logo -->
-            <h1><a ><span>BLOCK-</span>VOTE</a></h1>
+            <h1><a><span>BLOCK-</span>VOTE</a></h1>
         </div>
 
         <nav id="nav-menu-container">
             <ul class="nav-menu">
-                <li class="reg" ><a href="index.html" >Register / Login</a></li>
-                <li class="vot"><a href="vote.html" >Vote</a></li>
-                <li><a href="results.html" >Results</a></li>
+                <li class="reg"><a href="index.html">Register / Login</a></li>
+                <li class="vot"><a href="vote.html">Vote</a></li>
+                <li><a href="results.html">Results</a></li>
                 <li class="buy-tickets"><a href="admin.html">Admin Panel</a></li>
             </ul>
-        </nav><!-- #nav-menu-container -->
+        </nav>
     </div>
-</header><!-- #header -->
+</header>
 
 <!--==========================
   Intro Section
 ============================-->
 <section id="intro">
     <div class="intro-container wow fadeIn">
-        <h1 style="text-transform: initial" id="new-candidate" >Add<span> a new candidate</span></h1>
+        <h1 style="text-transform: initial" id="new-candidate">Add<span> a new candidate</span></h1>
         <div id="loader">
             <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
                 <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
                 <circle cx="170" cy="170" r="135" stroke="#404041"/>
                 <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
                 <circle cx="170" cy="170" r="85" stroke="#404041"/>
-            </svg>    </div>
+            </svg>
+        </div>
         <div id="content" style="display: none; background-color: white; color: black;">
-
-            <form class="addCandidateForm" onSubmit="App.addCandidate(); return false;" >
+            <form id="addCandidateForm">
                 <div class="form-row" style="padding-top: 15px">
                     <div class="form-group col-md-6">
-                        <label for="CfirstName" >First Name</label>
+                        <label for="CfirstName">First Name</label>
                         <input type="text" class="form-control" id="CfirstName" placeholder="First Name" required>
                     </div>
                     <div class="form-group col-md-6">
@@ -83,19 +80,18 @@
                     </div>
                 </div>
                 <div class="form-group col-lg-12">
-                    <label for="CidNumber" >Party Name</label>
+                    <label for="CidNumber">Party Name</label>
                     <input type="text" class="form-control" id="CidNumber" placeholder="Party Name" required>
                 </div>
-                <button type="submit" class="btn " style="background-color: #f82249; color: white">Add Candidate</button>
+                <button type="submit" class="btn" style="background-color: #f82249; color: white">Add Candidate</button>
             </form>
-            <a  class="about-btn scrollto" id="accountAddress" class="text-center" style="background-color: #f82249; color: white"></a>
+            <a class="about-btn scrollto" id="accountAddress" class="text-center" style="background-color: #f82249; color: white"></a>
         </div>
     </div>
 </section>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
@@ -112,5 +108,35 @@
 <script src="others/owlcarousel/owl.carousel.min.js"></script>
 <!-- Main Javascript File -->
 <script src="js/main.js"></script>
+
+<script>
+  document.getElementById('addCandidateForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const CfirstName = document.getElementById('CfirstName').value;
+    const ClastName = document.getElementById('ClastName').value;
+    const CidNumber = document.getElementById('CidNumber').value;
+
+    try {
+      const response = await fetch('/create-candidate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ CfirstName, ClastName, CidNumber })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Candidate created successfully', result);
+        App.addCandidate(); // Call App.addCandidate after successful server-side candidate creation
+      } else {
+        console.error('Failed to create candidate');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+</script>
 </body>
 </html>
