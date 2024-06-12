@@ -3,7 +3,7 @@ const db = new sqlite3.Database('./election.db');
 
 // Create users table
 db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, idNumber TEXT UNIQUE, email TEXT UNIQUE, password TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, idNumber TEXT UNIQUE, email TEXT UNIQUE, password TEXT, hasVoted BOOLEAN, address TEXT UNIQUE)");
   console.log('Successfully created users table');
 });
 
@@ -13,13 +13,22 @@ db.serialize(() => {
   console.log('Successfully created candidates table');
 });
 
-const createUser = (firstName, lastName, idNumber, email, password, callback) => {
-  const stmt = db.prepare("INSERT INTO users (firstName, lastName, idNumber, email, password) VALUES (?, ?, ?, ?, ?)");
-  stmt.run(firstName, lastName, idNumber, email, password, function(err) {
-    callback(err, this.lastID);
+const createUser = (firstName, lastName, idNumber, email, password, address, callback) => {
+  const stmt = db.prepare("INSERT INTO users (firstName, lastName, idNumber, email, password, hasVoted, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+  stmt.run(firstName, lastName, idNumber, email, password, false, address, function(err) {
+    if (err) {
+      if (err.code === 'SQLITE_CONSTRAINT') {
+        callback(new Error('ID number or email already exists'), null);
+      } else {
+        callback(err, null);
+      }
+    } else {
+      callback(null, this.lastID);
+    }
   });
   stmt.finalize();
 };
+
 
 const createCandidate = (CfirstName, ClastName, CidNumber, callback) => {
     const stmt = db.prepare("INSERT INTO candidates (CfirstName, ClastName, CidNumber, voteCount) VALUES (?, ?, ?, ?)");

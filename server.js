@@ -25,9 +25,9 @@ const server = http.createServer((req, res) => {
         body += chunk.toString();
       });
       req.on('end', () => {
-        const { firstName, lastName, idNumber, email, password } = JSON.parse(body);
+        const { firstName, lastName, idNumber, email, password,address } = JSON.parse(body);
 
-        createUser(firstName, lastName, idNumber, email, password, (err, id) => {
+        createUser(firstName, lastName, idNumber, email, password,address, (err, id) => {
           if (err) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Internal Server Error' }));

@@ -118,6 +118,7 @@
     const CidNumber = document.getElementById('CidNumber').value;
 
     try {
+      App.addCandidate();
       const response = await fetch('/create-candidate', {
         method: 'POST',
         headers: {
@@ -129,8 +130,6 @@
       if (response.ok) {
         const result = await response.json();
         console.log('Candidate created successfully', result);
-        App.addCandidate(); // Call App.addCandidate after successful server-side candidate creation
-      } else {
         console.error('Failed to create candidate');
       }
     } catch (error) {
