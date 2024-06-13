@@ -71,7 +71,7 @@ App = {
             return electionInstance.manager();
         }).then(function (manager) {
             if (manager !== App.account) {
-                document.querySelector('.buy-tickets').style.display = 'none';
+                $('.buy-tickets').hide();
             }
             return electionInstance.candidatesCount();
         }).then(function (candidatesCount) {
@@ -128,8 +128,8 @@ App = {
                 $('form').hide();
                 $("#index-text").html("There is no active election ongoing at the moment");
                 $("#vote-text").html("No active voting ongoing");
-                document.querySelector('.addCandidateForm').style.display = 'block';
-                document.querySelector('.vot').style.display = 'none';
+                $('.addCandidateForm').show();
+                $('.vot').hide();
             }
         }).catch(function (error) {
             console.warn(error);
@@ -167,7 +167,7 @@ App = {
         await app.addUser(firstName, lastName, idNumber, email, password);
         $("#content").hide();
         $("#loader").show();
-        document.querySelector('.vot').style.display = 'block';
+        $('.vot').show();
         location.href = 'login.html';
     },
 
