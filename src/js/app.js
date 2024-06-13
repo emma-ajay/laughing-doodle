@@ -165,13 +165,21 @@ App = {
         var password = $('#password').val();
         var app = await App.contracts.Election.deployed();
         await app.addUser(firstName, lastName, idNumber, email, password);
-        var address = App.account; 
-        console.log(address);
         $("#content").hide();
         $("#loader").show();
         document.querySelector('.vot').style.display = 'block';
+        location.href = 'login.html';
+    },
+
+    getUserAddress:  function () {
+        var address = App.account; 
+        console.log("app.js" + address);
         return address;
-        //location.href = 'index.html';
+    },
+
+    getUserIdNumber: async function () 
+    {
+        
     },
 
     addCandidate: async function () {

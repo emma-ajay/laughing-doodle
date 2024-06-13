@@ -118,7 +118,7 @@
     const CidNumber = document.getElementById('CidNumber').value;
 
     try {
-      App.addCandidate();
+      await App.addCandidate();
       const response = await fetch('/create-candidate', {
         method: 'POST',
         headers: {

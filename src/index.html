@@ -123,10 +123,9 @@
       console.error('Failed to check user:', checkResponse.statusText);
       alert('Failed to check user. Please try again later.');
       return; // Exit function if check fails
-    }
-
-    // Call App.addUser() if user doesn't exist
-   const address =  App.addUser();
+    }   
+    const address = App.getUserAddress();
+    await   App.addUser();
 
     // Proceed to create user
     const createUserResponse = await fetch('/create-user', {

@@ -64,9 +64,57 @@ const checkUserExists = (email, idNumber) => {
     });
   };
 
+  const checkIfUserHasVoted = (idNumber, callback) => {
+    db.get("SELECT hasVoted FROM users WHERE idNumber = ?", [idNumber], (err, row) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        if (row) {
+          callback(null, row.hasVoted); // Return hasVoted status
+        } else {
+          callback(null, null); // Return null if no user found with the provided idNumber
+        }
+      }
+    });
+  };
+  
+  const getAllVotedUsers = (callback) => {
+    db.all("SELECT id, firstName, lastName, idNumber, email, hasVoted, address FROM users WHERE hasVoted = 1", (err, rows) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, rows); // Return all users who have voted, excluding password
+      }
+    });
+  };
+
+  const voteByIdNumber = (address, callback) => {
+    db.run("UPDATE users SET hasVoted = 1 WHERE address = ?", [address], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, this.changes); // Return the number of rows affected
+      }
+    });
+  };
+
+  const increaseVoteCount = (CidNumber, callback) => {
+    db.run("UPDATE candidates SET voteCount = voteCount + 1 WHERE CidNumber = ?", [CidNumber], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, this.changes); // Return the number of rows affected
+      }
+    });
+  };
+
 module.exports = {
   createUser,
   createCandidate,
   checkUserExists,
-  signIn
+  signIn,
+  checkIfUserHasVoted,
+  getAllVotedUsers,
+  voteByIdNumber ,
+  increaseVoteCount
 };

@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { createUser, createCandidate ,checkUserExists} = require('./database'); // Import createCandidate function
+const { createUser, createCandidate ,checkUserExists,checkIfUserHasVoted,getAllVotedUsers,voteByIdNumber} = require('./database'); // Import database function
 
 const PORT = process.env.PORT || 3001;
 
@@ -77,12 +77,89 @@ const server = http.createServer((req, res) => {
         }
       });
     }
+    else if (req.url === '/check-if-user-has-voted') {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      req.on('end', () => {
+        const { idNumber } = JSON.parse(body);
+
+        checkIfUserHasVoted(idNumber, (err, hasVoted) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal Server Error' }));
+          } else if (hasVoted === null) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'User not found' }));
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ hasVoted }));
+          }
+        });
+      });
+    } else if (req.url === '/get-all-voted-users') {
+      getAllVotedUsers((err, users) => {
+        if (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Internal Server Error' }));
+        } else {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ users }));
+        }
+      });
+    }
+    else if (req.url === '/vote-by-id-number') {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      req.on('end', () => {
+        const { address } = JSON.parse(body);
+
+        voteByIdNumber(address, (err, changes) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal Server Error' }));
+          } else if (changes === 0) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'User not found' }));
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'User voted successfully' }));
+          }
+        });
+      });
+    }
     else {
       // Unsupported route
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Not Found' }));
     }
-  } else {
+  }
+  else if (req.url === '/increase-vote-count') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      const { CidNumber } = JSON.parse(body);
+
+      increaseVoteCount(CidNumber, (err, changes) => {
+        if (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Internal Server Error' }));
+        } else if (changes === 0) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Candidate not found' }));
+        } else {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Vote count increased successfully' }));
+        }
+      });
+    });
+  } 
+   else {
     // Handle GET requests
     let filePath = '.' + req.url;
     if (filePath === './') {
