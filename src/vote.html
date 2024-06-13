@@ -83,7 +83,7 @@
                 </tbody>
             </table>
 
-            <form onSubmit="App.castVote(); return false;">
+            <form onSubmit="handleFormSubmit(event)">
                 <div class="form-group">
                     <label for="candidatesSelect" style="color: white; font-size: 25px">Select Candidate</label>
                     <select class="form-control btn-sm " id="candidatesSelect" style=" align-content: center">
@@ -113,7 +113,47 @@
 <script src="others/wow/wow.min.js"></script>
 <script src="others/venobox/venobox.min.js"></script>
 <script src="others/owlcarousel/owl.carousel.min.js"></script>
-<!-- Main Javascript File -->
 <script src="js/main.js"></script>
+<script>
+    async function handleFormSubmit(event) {
+
+        event.preventDefault();
+        
+        const address = App.getUserAddress();
+
+        var candidateId = $('#candidatesSelect').val();
+    
+        try {
+           await App.castVote();
+            const response = await fetch('/vote-by-id-number', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ address: address })
+            });
+    
+            const response2 = await fetch('/increase-vote-count', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ CidNumber: candidateId })
+        });
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Vote result:', result);
+            } else {
+                console.error('Failed to cast vote:', response.statusText);
+                alert('Failed to cast vote. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Error casting vote:', error);
+            alert('An error occurred. Please try again later.');
+        }
+
+
+    }
+    </script>
 </body>
 </html>
