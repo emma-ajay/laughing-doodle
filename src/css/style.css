@@ -3,6 +3,21 @@
 # General
 --------------------------------------------------------------*/
 
+.candidate-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+.candidate-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+.candidate-box p {
+  margin: 5px 0;
+  color: #666;
+}
 body {
   background: #fff;
   color: #2f3138;

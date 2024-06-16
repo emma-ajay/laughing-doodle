@@ -81,6 +81,9 @@ App = {
             var candidatesSelect = $('#candidatesSelect');
             candidatesSelect.empty();
 
+            var candidatesResultsContainer = $('#candidatesResultsContainer');
+            candidatesResultsContainer.empty();
+
             for (var i = 1; i <= candidatesCount; i++) {
                 electionInstance.candidates(i).then(function (candidate) {
                     var id = candidate[0];
@@ -91,6 +94,29 @@ App = {
 
                     var candidateTemplate = "<tr><th>" + id + "</th><td>" + fname + " " + lname + "</td><td>" + idNumber + "</td><td>" + voteCount + "</td></tr>";
                     candidatesResults.append(candidateTemplate);
+
+                //     var candidateBox = `
+                //     <div class="candidate-box">
+                //         <h2>${fname} ${lname}</h2>
+                //         <p>Party: ${idNumber}</p>
+                //         <p>Votes: ${voteCount}</p>
+                //     </div>
+                // `;
+
+                var candidateBox = `
+                <div
+                class="py-5 px-20 flex flex-col items-center justify-center bg-[#ECF1FF66] border border-[#EEF1F0]"
+              >
+                <div class="flex items-center justify-center gap-4">
+                  🗳
+  
+                  <p class="font-bold text-xl">${voteCount}</p>
+                </div>
+                <p>${fname} ${lname}</p>
+                <p>Party: ${idNumber}</p>
+              </div>`;
+
+                candidatesResultsContainer.append(candidateBox);
 
                     var candidateOption = "<option value='" + id + "'>" + fname + " " + lname + "</option>";
                     candidatesSelect.append(candidateOption);

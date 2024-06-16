@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BC Vote</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Block Vote</title>
 
     <!-- Bootstrap -->
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -25,11 +26,13 @@
     <!-- <link href="others/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="others/animate/animate.min.css" rel="stylesheet">
     <link href="others/venobox/venobox.css" rel="stylesheet">
-    <link href="others/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> -->
+    <link href="others/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" rel="stylesheet"> -->
 
     <!-- Other Stylesheet File -->
     <link href="css/index.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,10 +44,8 @@
     <!--==========================
    Header
  ============================-->
-    <nav
-      id=""
-      class="flex items-center justify-start pt-5 px-8 pb-1 divide-x-2 border-b-2"
-    >
+ <nav id="" class="flex items-end justify-between pt-2 px-8 pb-1 border-b-2">
+    <div class="flex items-center justify-start divide-x-2">
       <h1 class="flex items-center justify-start space-x-3 me-6">
         <svg
           width="32"
@@ -84,21 +85,34 @@
       </h1>
       <ul class="flex items-center space-x-9 px-6 text-sm text-[#9FA6B2]">
         <li>
-          <a
-            href="index.html"
-            class="p-3 hover:text-[#245DE7]"
-            >Register</a
-          >
+          <a href="index.html" class="p-3 hover:text-[#245DE7]">Register</a>
         </li>
         <li>
           <a href="vote.html" class="p-3 hover:text-[#245DE7]">Vote</a>
         </li>
         <li>
-          <a href="results.html" class="p-3 hover:text-[#245DE7]">Results</a>
+          <a
+            href="results.html"
+            class="p-3 hover:text-[#245DE7]"
+            >Results</a
+          >
         </li>
-        <li><a href="admin.html" class="p-3 hover:text-[#245DE7]">Admin</a></li>
+        <li>
+          <a href="admin.html" class="p-3 text-[#245DE7] font-semibold bg-[#ECF1FF] rounded-md">Admin</a>
+        </li>
       </ul>
-    </nav>
+    </div>
+    <div class="bg-[#F2F5FE] px-3 py-1.5 rounded-md">
+      <p>
+        Your Account:
+        <script>
+          getUserAddress();
+        </script>
+      </p>
+      <p class="text-green-300">Logged In</p>
+    </div>
+  </nav>
+    <!-- #header -->
 
     <!--==========================
   Intro Section
@@ -106,78 +120,185 @@
     <section id="intro">
       <!-- <div class="intro-container wow fadeIn"> -->
       <div class="">
-        <h1
-          id="index-text"
-          class="text-center text-[#245DE7] text-2xl font-semibold mt-4"
-        >
-          Add Candidate
+        <!--        <h1   style="text-transform: initial">Admin<span> Panel</span></h1>-->
+        <h1 class="text-center text-[#245DE7] text-2xl font-semibold mt-4 mb-4">
+          Admin Panel
         </h1>
-        <p class="text-center text-sm">Add a new candidate</p>
-        <!-- <div id="loader">
-            <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
-                <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
-                <circle cx="170" cy="170" r="135" stroke="#404041"/>
-                <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
-                <circle cx="170" cy="170" r="85" stroke="#404041"/>
-            </svg>
-        </div> -->
-        <div id="content">
-          <form id="addCandidateForm" class="w-1/3 my-6 mx-auto">
-            <div class="flex flex-col items-start justify-start space-y-2 mb-3">
-              <label for="CfirstName">First Name</label>
-              <input
-                type="text"
-                class="form-control w-full py-3.5 px-4 text-sm border border-[#E4E4E7] rounded-xl"
-                id="CfirstName"
-                placeholder="Add candidate first name"
-                required
-              />
-            </div>
-            <div class="flex flex-col items-start justify-start space-y-2 mb-3">
-              <label for="ClastName">Last Name</label>
-              <input
-                type="text"
-                class="form-control w-full py-3.5 px-4 text-sm border border-[#E4E4E7] rounded-xl"
-                id="ClastName"
-                placeholder="Add candidate last name"
-                required
-              />
-            </div>
-            <div class="flex flex-col items-start justify-start space-y-2 mb-3">
-              <label for="CidNumber">Party Name</label>
-              <input
-                type="text"
-                class="form-control w-full py-3.5 px-4 text-sm border border-[#E4E4E7] rounded-xl"
-                id="CidNumber"
-                placeholder="Add party name"
-                required
-              />
+        <div class="container">
+          <div id="content">
+            <div class="my-6 flex items-center justify-center">
+              <div
+                class="py-5 px-20 flex flex-col items-center justify-center bg-[#ECF1FF66] border border-[#EEF1F0]"
+              >
+                <div class="flex items-center justify-center gap-4">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 36 36"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    role="img"
+                    class="iconify iconify--twemoji"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <path
+                      fill="#8CCAF7"
+                      d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"
+                    ></path>
+
+                    <path
+                      fill="#292F33"
+                      d="M28.5 16.5A1.5 1.5 0 0 1 27 18H9a1.5 1.5 0 1 1 0-3h18a1.5 1.5 0 0 1 1.5 1.5z"
+                    ></path>
+
+                    <path
+                      fill="#FFD983"
+                      d="M26.25 17.188v-14a2 2 0 0 0-2-2h-13a2 2 0 0 0-2 2v14h17z"
+                    ></path>
+
+                    <path
+                      fill="#5DADEC"
+                      d="M34.5 25a2 2 0 0 0-2-2h-29a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h29a2 2 0 0 0 2-2v-8z"
+                    ></path>
+
+                    <path
+                      fill="#4289C1"
+                      d="M13.5 23v6a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-6h-9z"
+                    ></path>
+
+                    <path
+                      fill="#5DADEC"
+                      d="M22.5 23v-1a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v1h9zm-3 4.5a1.5 1.5 0 0 1-3 0v-1a1.5 1.5 0 1 1 3 0v1z"
+                    ></path>
+
+                    <path
+                      d="M24 5a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5"
+                      fill="#C1694F"
+                    ></path>
+
+                    <g fill="#C1694F">
+                      <circle cx="13" cy="5" r="1"></circle>
+
+                      <circle cx="13" cy="9" r="1"></circle>
+
+                      <circle cx="13" cy="13" r="1"></circle>
+                    </g>
+                  </svg>
+
+                  <p class="font-bold text-xl">8</p>
+                </div>
+                <p>Jeremy White</p>
+              </div>
+              <div
+                class="py-5 px-20 flex flex-col items-center justify-center bg-[#ECF1FF66] border border-[#EEF1F0]"
+              >
+                <div class="flex items-center justify-center gap-4">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 36 36"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    role="img"
+                    class="iconify iconify--twemoji"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <path
+                      fill="#8CCAF7"
+                      d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"
+                    ></path>
+
+                    <path
+                      fill="#292F33"
+                      d="M28.5 16.5A1.5 1.5 0 0 1 27 18H9a1.5 1.5 0 1 1 0-3h18a1.5 1.5 0 0 1 1.5 1.5z"
+                    ></path>
+
+                    <path
+                      fill="#FFD983"
+                      d="M26.25 17.188v-14a2 2 0 0 0-2-2h-13a2 2 0 0 0-2 2v14h17z"
+                    ></path>
+
+                    <path
+                      fill="#5DADEC"
+                      d="M34.5 25a2 2 0 0 0-2-2h-29a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h29a2 2 0 0 0 2-2v-8z"
+                    ></path>
+
+                    <path
+                      fill="#4289C1"
+                      d="M13.5 23v6a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-6h-9z"
+                    ></path>
+
+                    <path
+                      fill="#5DADEC"
+                      d="M22.5 23v-1a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v1h9zm-3 4.5a1.5 1.5 0 0 1-3 0v-1a1.5 1.5 0 1 1 3 0v1z"
+                    ></path>
+
+                    <path
+                      d="M24 5a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5"
+                      fill="#C1694F"
+                    ></path>
+
+                    <g fill="#C1694F">
+                      <circle cx="13" cy="5" r="1"></circle>
+
+                      <circle cx="13" cy="9" r="1"></circle>
+
+                      <circle cx="13" cy="13" r="1"></circle>
+                    </g>
+                  </svg>
+
+                  <p class="font-bold text-xl">0</p>
+                </div>
+                <p>Tinubu Ahmed</p>
+              </div>
             </div>
             <button
-              type="submit"
-              class="w-full my-8 py-3.5 flex items-center justify-center space-x-2 bg-[#245DE7] text-white rounded-xl"
+              type="button"
+              class="w-1/3 mx-auto my-8 py-3.5 flex items-center justify-center space-x-2 bg-[#245DE7] text-white rounded-xl"
+              onclick="location.href='addCandidate.html';"
             >
-              <p>Add Candidate</p>
-              <svg
-                width="21"
-                height="12"
-                viewBox="0 0 21 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19.7688 4.24545L16.5434 0.98676C16.466 0.908644 16.3738 0.846642 16.2722 0.80433C16.1707 0.762018 16.0617 0.740234 15.9517 0.740234C15.8417 0.740234 15.7327 0.762018 15.6312 0.80433C15.5296 0.846642 15.4374 0.908644 15.36 0.98676C15.2047 1.14291 15.1176 1.35415 15.1176 1.57432C15.1176 1.7945 15.2047 2.00574 15.36 2.16189L18.327 5.15388H1.33342C1.11239 5.15388 0.900402 5.24169 0.744105 5.39799C0.587807 5.55429 0.5 5.76627 0.5 5.98731H0.5C0.5 6.20835 0.587807 6.42033 0.744105 6.57663C0.900402 6.73293 1.11239 6.82073 1.33342 6.82073H18.377L15.36 9.8294C15.2819 9.90688 15.2198 9.99905 15.1775 10.1006C15.1352 10.2022 15.1134 10.3111 15.1134 10.4211C15.1134 10.5312 15.1352 10.6401 15.1775 10.7416C15.2198 10.8432 15.2819 10.9354 15.36 11.0129C15.4374 11.091 15.5296 11.153 15.6312 11.1953C15.7327 11.2376 15.8417 11.2594 15.9517 11.2594C16.0617 11.2594 16.1707 11.2376 16.2722 11.1953C16.3738 11.153 16.466 11.091 16.5434 11.0129L19.7688 7.77917C20.237 7.31037 20.5 6.67489 20.5 6.01231C20.5 5.34974 20.237 4.71425 19.7688 4.24545Z"
-                  fill="white"
-                />
-              </svg>
+              Add new Candidate
             </button>
-          </form>
-          <a
-            class="about-btn scrollto"
-            id="accountAddress"
-            class="text-center"
-            style="background-color: #f82249; color: white"
-          ></a>
+            <table class="w-1/2 mx-auto my-8">
+              <thead class="border-collapse border border-[#EEF1F0]">
+                <tr>
+                  <th
+                    class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                    scope="col"
+                  >
+                    Name
+                  </th>
+                  <th
+                    class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                    scope="col"
+                  >
+                    NIN
+                  </th>
+                  <th
+                    class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                    scope="col"
+                  >
+                    Email
+                  </th>
+                  <th
+                    class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                    scope="col"
+                  >
+                    Address
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="voterz" class="max-h-[50vh] overflow-scroll"></tbody>
+            </table>
+
+            <a
+              class="about-btn scrollto"
+              class="text-center"
+              id="accountAddress"
+            ></a>
+          </div>
         </div>
       </div>
     </section>
@@ -257,6 +378,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
@@ -273,36 +395,6 @@
     <script src="others/owlcarousel/owl.carousel.min.js"></script>
     <!-- Main Javascript File -->
     <script src="js/main.js"></script>
-
-    <script>
-      document
-        .getElementById("addCandidateForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          const CfirstName = document.getElementById("CfirstName").value;
-          const ClastName = document.getElementById("ClastName").value;
-          const CidNumber = document.getElementById("CidNumber").value;
-
-          try {
-            App.addCandidate();
-            const response = await fetch("/create-candidate", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ CfirstName, ClastName, CidNumber }),
-            });
-
-            if (response.ok) {
-              const result = await response.json();
-              console.log("Candidate created successfully", result);
-              console.error("Failed to create candidate");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-          }
-        });
-    </script>
+    <script src="js/countdown.js"></script>
   </body>
 </html>

@@ -1,9 +1,15 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { createUser, createCandidate ,checkUserExists,checkIfUserHasVoted,getAllVotedUsers,voteByIdNumber} = require('./database'); // Import database function
 
 const PORT = process.env.PORT || 3001;
+
+const hashPassword = (password, pepper) => {
+  return crypto.createHash('sha256').update(password + pepper).digest('hex');
+};
+
 
 const mimeTypes = {
   '.html': 'text/html',
@@ -26,8 +32,8 @@ const server = http.createServer((req, res) => {
       });
       req.on('end', () => {
         const { firstName, lastName, idNumber, email, password,address } = JSON.parse(body);
-
-        createUser(firstName, lastName, idNumber, email, password,address, (err, id) => {
+        const hashedPassword = hashPassword(password, lastName);
+        createUser(firstName, lastName, idNumber, email, hashedPassword,address, (err, id) => {
           if (err) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Internal Server Error' }));
