@@ -104,8 +104,9 @@ const server = http.createServer((req, res) => {
           }
         });
       });
-    } else if (req.url === '/get-all-voted-users') {
-      getAllVotedUsers((err, users) => {
+    } 
+    else if (req.url === '/get-all-voted-users') {
+      getAllVotedUsers((err) => {
         if (err) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ message: 'Internal Server Error' }));
@@ -137,34 +138,34 @@ const server = http.createServer((req, res) => {
         });
       });
     }
+    else if (req.url === '/increase-vote-count') {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      req.on('end', () => {
+        const { CidNumber } = JSON.parse(body);
+  
+        increaseVoteCount(CidNumber, (err, changes) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal Server Error' }));
+          } else if (changes === 0) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Candidate not found' }));
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Vote count increased successfully' }));
+          }
+        });
+      });
+    } 
     else {
       // Unsupported route
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Not Found' }));
     }
   }
-  else if (req.url === '/increase-vote-count') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      const { CidNumber } = JSON.parse(body);
-
-      increaseVoteCount(CidNumber, (err, changes) => {
-        if (err) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Internal Server Error' }));
-        } else if (changes === 0) {
-          res.writeHead(404, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Candidate not found' }));
-        } else {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Vote count increased successfully' }));
-        }
-      });
-    });
-  } 
    else {
     // Handle GET requests
     let filePath = '.' + req.url;

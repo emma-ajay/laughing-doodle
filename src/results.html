@@ -42,10 +42,8 @@
     <!--==========================
    Header
  ============================-->
-    <nav
-      id=""
-      class="flex items-center justify-start pt-5 px-8 pb-1 divide-x-2 border-b-2"
-    >
+ <nav id="" class="flex items-end justify-between pt-2 px-8 pb-1 border-b-2">
+    <div class="flex items-center justify-start divide-x-2">
       <h1 class="flex items-center justify-start space-x-3 me-6">
         <svg
           width="32"
@@ -97,9 +95,20 @@
             >Results</a
           >
         </li>
-        <li><a href="admin.html" class="p-3 hover:text-[#245DE7]">Admin</a></li>
+        <li>
+          <a href="admin.html" class="p-3 hover:text-[#245DE7]">Admin</a>
+        </li>
       </ul>
-    </nav>
+    </div>
+    <div class="bg-[#F2F5FE] px-3 py-1.5 rounded-md">
+      <p>
+        <a
+        id="accountAddress"
+      ></a>
+      </p>
+      <p class="text-green-300">Logged In</p>
+    </div>
+  </nav>
     <!-- #header -->
 
     <!--==========================
@@ -133,37 +142,36 @@
                 <div id="candidatesResultsContainer" class="my-6 flex items-center justify-center">
                 </div>
             </div>
-          <table class="w-1/2 mx-auto my-8">
+          <table class="w-2/3 mx-auto my-8">
             <thead class="border-collapse border border-[#EEF1F0]">
-              <tr>
-                <th
-                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
-                  scope="col"
-                >
-                  No
-                </th>
-                <th
-                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
-                  scope="col"
-                >
-                  Voters
-                </th>
-                <th
-                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
-                  scope="col"
-                >
-                  Candidate
-                </th>
-                <th
-                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
-                  scope="col"
-                >
-                  Party
-                </th>
-              </tr>
+                <tr>
+                    <th
+                      class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                      scope="col"
+                    >
+                      Name
+                    </th>
+                    <th
+                      class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                      scope="col"
+                    >
+                      NIN
+                    </th>
+                    <th
+                      class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                      scope="col"
+                    >
+                      Email
+                    </th>
+                    <th
+                      class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                      scope="col"
+                    >
+                      Address
+                    </th>
+                  </tr>
             </thead>
-            <tbody id="candidatesResults" class="max-h-[50vh] overflow-scroll">
-            </tbody>
+            <tbody id="votedPpl"> </tbody> 
           </table>
           <div id="votedFor"></div>
 

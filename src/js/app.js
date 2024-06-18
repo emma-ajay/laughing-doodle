@@ -62,7 +62,7 @@ App = {
         web3.eth.getCoinbase(function (err, account) {
             if (err === null) {
                 App.account = account;
-                $("#accountAddress").html("Your Account: " + account);
+                $("#accountAddress").html("Your Account: " + account.substring(0, 8));
             }
         });
 
@@ -136,6 +136,8 @@ App = {
         }).then(function (usersCount) {
             var voterz = $("#voterz");
             voterz.empty();
+            var votedPpl = $("#votedPpl");
+            votedPpl.empty();
 
             for (var i = 1; i <= usersCount; i++) {
                 electionInstance.users(i).then(function (user) {
@@ -147,6 +149,12 @@ App = {
 
                     let voterTemplate = "<tr><td>" + firstName + " " + lastName + "</td><td>" + idNumber + "</td><td>" + email + "</td><td>" + address + "</td></tr>";
                     voterz.append(voterTemplate);
+                    electionInstance.voters(address).then(function (hasVoted) {
+                        if (hasVoted) {
+                            let votedTemplate = "<tr><td>" + firstName + " " + lastName + "</td><td>" + idNumber + "</td><td>" + email + "</td><td>" + address + "</td></tr>";
+                            votedPpl.append(votedTemplate);
+                        }
+                    });
                 });
             }
 

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Block Vote</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Favicons -->
     <link href="images/favicon.png" rel="icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,12 +18,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Bootstrap -->
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-
-    <!-- Favicons -->
-    <link href="images/favicon.png" rel="icon" />
 
     <!-- Google Fonts -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet"> -->
@@ -39,7 +38,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body class="h-screen w-screen overflow-x-hidden">
     <!--==========================
    Header
  ============================-->
@@ -87,14 +86,14 @@
             <a href="index.html" class="p-3 hover:text-[#245DE7]">Register</a>
           </li>
           <li>
-            <a
-              href="vote.html"
-              class="p-3 text-[#245DE7] font-semibold bg-[#ECF1FF] rounded-md"
-              >Vote</a
-            >
+            <a href="vote.html" class="p-3 hover:text-[#245DE7]">Vote</a>
           </li>
           <li>
-            <a href="results.html" class="p-3hover:text-[#245DE7]">Results</a>
+            <a
+              href="results.html"
+              class="p-3 text-[#245DE7] font-semibold bg-[#ECF1FF] rounded-md"
+              >Results</a
+            >
           </li>
           <li>
             <a href="admin.html" class="p-3 hover:text-[#245DE7]">Admin</a>
@@ -102,9 +101,11 @@
         </ul>
       </div>
       <div class="bg-[#F2F5FE] px-3 py-1.5 rounded-md">
-        <p>     <a
-            id="accountAddress"
-          ></a>
+        <p>
+          Your Account:
+          <script>
+            getUserAddress();
+          </script>
         </p>
         <p class="text-green-300">Logged In</p>
       </div>
@@ -118,12 +119,12 @@
       <!-- <div class="intro-container wow fadeIn"> -->
       <div class="">
         <h1
-          id="vote-text"
+          id="index-text"
           class="text-center text-[#245DE7] text-2xl font-semibold my-4"
         >
-          Cast your vote
+          Results
         </h1>
-        <p class="text-center text-sm mb-4">Select a candidate below</p>
+        <p class="text-center text-sm">See the result of this voting process</p>
         <!-- <div id="loader">
           <svg
             class="loader"
@@ -138,51 +139,175 @@
         </div> -->
         <!-- <div id="content" style="display: none"> -->
         <div id="content">
-          <!-- <table
-            class="container table table-sm table-bordered"
-          >
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Party Name</th>
-                <th scope="col">Votes</th>
-              </tr>
-            </thead>
-            <tbody id="candidatesResults"></tbody>
-          </table> -->
-
-          <form onSubmit="handleFormSubmit(event)" class="w-1/3 mx-auto">
-            <div class="">
-              <label for="candidatesSelect">Candidate</label>
-              <div class="relative">
-                <select
-                  class="form-control w-full py-3.5 px-4 text-sm border border-[#E4E4E7] rounded-xl appearance-none"
-                  id="candidatesSelect"
-                ></select>
+          <div class="my-6 flex items-center justify-center">
+            <div
+              class="py-5 px-20 flex flex-col items-center justify-center bg-[#ECF1FF66] border border-[#EEF1F0]"
+            >
+              <div class="flex items-center justify-center gap-4">
                 <svg
-                  width="10"
-                  height="6"
-                  class="absolute top-1/2 right-6"
-                  viewBox="0 0 10 6"
-                  fill="none"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 36 36"
                   xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="iconify iconify--twemoji"
+                  preserveAspectRatio="xMidYMid meet"
                 >
                   <path
-                    d="M5 5.50023C4.93442 5.50103 4.86941 5.4881 4.80913 5.46227C4.74885 5.43643 4.69465 5.39827 4.65 5.35023L0.15 0.850234C-0.05 0.650234 -0.05 0.340234 0.15 0.140234C0.35 -0.0597656 0.66 -0.0597656 0.86 0.140234L5.01 4.29023L9.15 0.150234C9.35 -0.0497656 9.66 -0.0497656 9.86 0.150234C10.06 0.350234 10.06 0.660234 9.86 0.860234L5.36 5.36023C5.26 5.46023 5.13 5.51023 5.01 5.51023L5 5.50023Z"
-                    fill="#9FA6B2"
-                  />
+                    fill="#8CCAF7"
+                    d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"
+                  ></path>
+
+                  <path
+                    fill="#292F33"
+                    d="M28.5 16.5A1.5 1.5 0 0 1 27 18H9a1.5 1.5 0 1 1 0-3h18a1.5 1.5 0 0 1 1.5 1.5z"
+                  ></path>
+
+                  <path
+                    fill="#FFD983"
+                    d="M26.25 17.188v-14a2 2 0 0 0-2-2h-13a2 2 0 0 0-2 2v14h17z"
+                  ></path>
+
+                  <path
+                    fill="#5DADEC"
+                    d="M34.5 25a2 2 0 0 0-2-2h-29a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h29a2 2 0 0 0 2-2v-8z"
+                  ></path>
+
+                  <path
+                    fill="#4289C1"
+                    d="M13.5 23v6a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-6h-9z"
+                  ></path>
+
+                  <path
+                    fill="#5DADEC"
+                    d="M22.5 23v-1a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v1h9zm-3 4.5a1.5 1.5 0 0 1-3 0v-1a1.5 1.5 0 1 1 3 0v1z"
+                  ></path>
+
+                  <path
+                    d="M24 5a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5"
+                    fill="#C1694F"
+                  ></path>
+
+                  <g fill="#C1694F">
+                    <circle cx="13" cy="5" r="1"></circle>
+
+                    <circle cx="13" cy="9" r="1"></circle>
+
+                    <circle cx="13" cy="13" r="1"></circle>
+                  </g>
                 </svg>
+
+                <p class="font-bold text-xl">8</p>
               </div>
+              <p>Jeremy White</p>
             </div>
-            <button
-              type="submit"
-              id="voteBtn"
-              class="w-full mt-9 py-3.5 flex items-center justify-center space-x-2 bg-[#245DE7] text-white rounded-xl disabled:bg-[#245DE780]"
+            <div
+              class="py-5 px-20 flex flex-col items-center justify-center bg-[#ECF1FF66] border border-[#EEF1F0]"
             >
-              Vote
-            </button>
-          </form>
+              <div class="flex items-center justify-center gap-4">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="iconify iconify--twemoji"
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  <path
+                    fill="#8CCAF7"
+                    d="M34.5 24.995c0 2.209-1.791 2-4 2h-25c-2.209 0-4 .209-4-2L3.5 11c.293-1.75 1-2 2-2h25c1 0 1.791.208 2 2l2 13.995z"
+                  ></path>
+
+                  <path
+                    fill="#292F33"
+                    d="M28.5 16.5A1.5 1.5 0 0 1 27 18H9a1.5 1.5 0 1 1 0-3h18a1.5 1.5 0 0 1 1.5 1.5z"
+                  ></path>
+
+                  <path
+                    fill="#FFD983"
+                    d="M26.25 17.188v-14a2 2 0 0 0-2-2h-13a2 2 0 0 0-2 2v14h17z"
+                  ></path>
+
+                  <path
+                    fill="#5DADEC"
+                    d="M34.5 25a2 2 0 0 0-2-2h-29a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h29a2 2 0 0 0 2-2v-8z"
+                  ></path>
+
+                  <path
+                    fill="#4289C1"
+                    d="M13.5 23v6a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2v-6h-9z"
+                  ></path>
+
+                  <path
+                    fill="#5DADEC"
+                    d="M22.5 23v-1a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v1h9zm-3 4.5a1.5 1.5 0 0 1-3 0v-1a1.5 1.5 0 1 1 3 0v1z"
+                  ></path>
+
+                  <path
+                    d="M24 5a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5m0 4a.5.5 0 0 1-.5.5H16a.5.5 0 0 1 0-1h7.5a.5.5 0 0 1 .5.5"
+                    fill="#C1694F"
+                  ></path>
+
+                  <g fill="#C1694F">
+                    <circle cx="13" cy="5" r="1"></circle>
+
+                    <circle cx="13" cy="9" r="1"></circle>
+
+                    <circle cx="13" cy="13" r="1"></circle>
+                  </g>
+                </svg>
+
+                <p class="font-bold text-xl">0</p>
+              </div>
+              <p>Tinubu Ahmed</p>
+            </div>
+          </div>
+          <table class="w-1/2 mx-auto my-8">
+            <thead class="border-collapse border border-[#EEF1F0]">
+              <tr>
+                <th
+                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                  scope="col"
+                >
+                  No
+                </th>
+                <th
+                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                  scope="col"
+                >
+                  Voters
+                </th>
+                <th
+                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                  scope="col"
+                >
+                  Candidate
+                </th>
+                <th
+                  class="font-normal text-[#9FA6B2] text-left px-5 py-3 border border-[#EEF1F0]"
+                  scope="col"
+                >
+                  Party
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              id="candidatesResults"
+              class="max-h-[50vh] overflow-scroll"
+            ></tbody>
+          </table>
+          <div id="votedFor"></div>
+
+          <a
+            class="about-btn scrollto"
+            id="accountAddress"
+            class="text-center"
+          ></a>
         </div>
       </div>
     </section>
@@ -259,48 +384,7 @@
         />
       </g>
     </svg>
-    <script>
-        async function handleFormSubmit(event) {
-    
-            event.preventDefault();
-            
-            const address = App.getUserAddress();
-    
-            var candidateId = $('#candidatesSelect').val();
-        
-            try {
-               await App.castVote();
-                const response = await fetch('/vote-by-id-number', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ address: address })
-                });
-                console.log('Vote response:', response);
 
-                const response2 = await fetch('/increase-vote-count', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ CidNumber: candidateId })
-            });
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log('Vote result:', result);
-                } else {
-                    console.error('Failed to cast vote:', response.statusText);
-                    alert('Failed to cast vote. Please try again later.');
-                }
-            } catch (error) {
-                console.error('Error casting vote:', error);
-                alert('An error occurred. Please try again later.');
-            }
-    
-    
-        }
-        </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
