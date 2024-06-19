@@ -178,6 +178,8 @@ App = {
             regForm.hide();
         } else {
             $("#index-text").html("Please log in to continue.");
+            var regForm =   $('#regForm');
+            regForm.show();
         }
     },
 
