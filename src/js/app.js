@@ -168,6 +168,17 @@ App = {
         }).catch(function (error) {
             console.warn(error);
         });
+        if (localStorage.getItem('userAccount')) {
+            $("#index-text").html("You are successfully logged in!");
+            var regForm =   $('#regForm');
+            var navbar = $('#navId');
+            let logoutB = `<button class="btn btn-primary" onclick="App.logout()">Logout</button>`;
+            navbar.append(logoutB);
+
+            regForm.hide();
+        } else {
+            $("#index-text").html("Please log in to continue.");
+        }
     },
 
     castVote: function () {
@@ -259,7 +270,16 @@ App = {
     endElection: function () {
         localStorage.setItem("finishElection", "1");
         location.href = 'results.html';
-    }
+    },
+
+    logout: function () {
+        localStorage.removeItem('userAccount');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('votedForID');
+        App.account = '0x0';
+        location.href = 'index.html';
+    },
+
 };
 
 $(function () {

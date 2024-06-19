@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { createUser, createCandidate ,checkUserExists,checkIfUserHasVoted,getAllVotedUsers,voteByIdNumber} = require('./database'); // Import database function
+const { createUser, createCandidate ,checkUserExists,checkIfUserHasVoted,getAllVotedUsers,voteByIdNumber,increaseVoteCount} = require('./database'); // Import database function
 
 const PORT = process.env.PORT || 3001;
 
@@ -43,7 +43,8 @@ const server = http.createServer((req, res) => {
           }
         });
       });
-    } else if (req.url === '/create-candidate') {
+    } 
+    else if (req.url === '/create-candidate') {
       // Handle create candidate route
       let body = '';
       req.on('data', chunk => {
@@ -105,31 +106,33 @@ const server = http.createServer((req, res) => {
         });
       });
     } 
-    else if (req.url === '/get-all-voted-users') {
-      getAllVotedUsers((err) => {
-        if (err) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Internal Server Error' }));
-        } else {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ users }));
-        }
-      });
-    }
-    else if (req.url === '/vote-by-id-number') {
+    // else if (req.url === '/get-all-voted-users') {
+    //   getAllVotedUsers((err) => {
+    //     if (err) {
+    //       res.writeHead(500, { 'Content-Type': 'application/json' });
+    //       res.end(JSON.stringify({ message: 'Internal Server Error' }));
+    //     } else {
+    //       res.writeHead(200, { 'Content-Type': 'application/json' });
+    //       res.end(JSON.stringify({ users }));
+    //     }
+    //   });
+    // }
+    else if (req.url === '/vote-by-id') {
+      console.log("vote-by-id");
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();
       });
       req.on('end', () => {
         const { address } = JSON.parse(body);
+        console.log("vote-by-id" + address);
 
         voteByIdNumber(address, (err, changes) => {
           if (err) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Internal Server Error' }));
           } else if (changes === 0) {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'User not found' }));
           } else {
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -147,6 +150,7 @@ const server = http.createServer((req, res) => {
         const { CidNumber } = JSON.parse(body);
   
         increaseVoteCount(CidNumber, (err, changes) => {
+          console.log("increase-vote-count" + CidNumber);
           if (err) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Internal Server Error' }));

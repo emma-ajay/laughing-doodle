@@ -93,13 +93,14 @@ const checkUserExists = (email, idNumber) => {
       if (err) {
         callback(err, null);
       } else {
-        callback(null, this.changes); // Return the number of rows affected
+        callback(null, this.changes); // Return the number of rows affected correctly
       }
     });
-  };
+};
+
 
   const increaseVoteCount = (CidNumber, callback) => {
-    db.run("UPDATE candidates SET voteCount = voteCount + 1 WHERE CidNumber = ?", [CidNumber], function(err) {
+    db.run("UPDATE candidates SET voteCount = voteCount + 1 WHERE id = ?", [CidNumber], function(err) {
       if (err) {
         callback(err, null);
       } else {

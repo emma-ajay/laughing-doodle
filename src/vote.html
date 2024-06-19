@@ -263,14 +263,17 @@
         async function handleFormSubmit(event) {
     
             event.preventDefault();
+
+            var status = false;
             
             const address = App.getUserAddress();
     
             var candidateId = $('#candidatesSelect').val();
         
             try {
-               await App.castVote();
-                const response = await fetch('/vote-by-id-number', {
+                await App.castVote();
+
+                const response = await fetch('/vote-by-id', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -293,6 +296,7 @@
                     console.error('Failed to cast vote:', response.statusText);
                     alert('Failed to cast vote. Please try again later.');
                 }
+            
             } catch (error) {
                 console.error('Error casting vote:', error);
                 alert('An error occurred. Please try again later.');
