@@ -18,7 +18,7 @@ const createUser = (firstName, lastName, idNumber, email, password, address, cal
   stmt.run(firstName, lastName, idNumber, email, password, false, address, function(err) {
     if (err) {
       if (err.code === 'SQLITE_CONSTRAINT') {
-        callback(new Error('ID number or email already exists'), null);
+        callback(new Error('ID number ,email or address already exists'), null);
       } else {
         callback(err, null);
       }
@@ -38,9 +38,9 @@ const createCandidate = (CfirstName, ClastName, CidNumber, callback) => {
     stmt.finalize();
   };
 
-const checkUserExists = (email, idNumber) => {
+const checkUserExists = (email, idNumber,address) => {
     return new Promise((resolve, reject) => {
-      db.get("SELECT COUNT(*) AS count FROM users WHERE email = ? OR idNumber = ?", [email, idNumber], (err, row) => {
+      db.get("SELECT COUNT(*) AS count FROM users WHERE email = ? OR idNumber = ? OR address = ? " , [email, idNumber,address], (err, row) => {
         if (err) {
           reject(err);
         } else {

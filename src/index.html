@@ -90,7 +90,7 @@
         <li>
           <a href="results.html" class="p-3 hover:text-[#245DE7]">Results</a>
         </li>
-        <li><a href="admin.html" class="p-3 hover:text-[#245DE7]">Admin</a></li>
+        <li><a href="admin.html" class="p-3 hover:text-[#245DE7]" id ="admine">Admin</a></li>
       </ul>
     </nav>
     <section id="intro">
@@ -322,6 +322,7 @@
   const idNumber = document.getElementById('idNumber').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
+  const address = App.getUserAddress();
 
   try {
     // Check if email or ID number already exists
@@ -330,14 +331,14 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, idNumber })
+      body: JSON.stringify({ email, idNumber, address})
     });
 
     if (checkResponse.ok) {
       const checkResult = await checkResponse.json();
       if (checkResult.exists) {
         console.error('User with this email or ID number already exists');
-        alert('User with this email or ID number already exists');
+        alert('User with this email, NIN or address number already exists');
         return; // Exit function if user already exists
       }
     } else {
@@ -345,7 +346,7 @@
       alert('Failed to check user. Please try again later.');
       return; // Exit function if check fails
     }   
-    const address = App.getUserAddress();
+    
     await   App.addUser();
 
     // Proceed to create user

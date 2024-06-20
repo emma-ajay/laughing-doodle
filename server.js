@@ -71,10 +71,10 @@ const server = http.createServer((req, res) => {
         body += chunk.toString();
       });
       req.on('end', async () => {
-        const { email, idNumber } = JSON.parse(body);
+        const { email, idNumber,address } = JSON.parse(body);
 
         try {
-          const userExists = await checkUserExists(email, idNumber);
+          const userExists = await checkUserExists(email, idNumber,address);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ exists: userExists }));
         } catch (error) {

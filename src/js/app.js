@@ -71,7 +71,7 @@ App = {
             return electionInstance.manager();
         }).then(function (manager) {
             if (manager !== App.account) {
-                $('.buy-tickets').hide();
+                $('#admine').hide();
             }
             return electionInstance.candidatesCount();
         }).then(function (candidatesCount) {
@@ -172,7 +172,21 @@ App = {
             $("#index-text").html("You are successfully logged in!");
             var regForm =   $('#regForm');
             var navbar = $('#navId');
-            let logoutB = `<button class="btn btn-primary" onclick="App.logout()">Logout</button>`;
+            let account = localStorage.getItem('userAccount');
+            let logoutB = `
+            <div class="flex items-end justify-between gap-4">
+                <div class="bg-[#F2F5FE] px-3 py-1.5 rounded-md">
+                <p>    Your Account: ${account.substring(0, 8)}
+                </p>
+                <p class="text-green-300">Logged In</p>
+                </div>
+                <button 
+                class="p-3 bg-red-600 text-sm text-white rounded-md"
+                onClick="App.logout()">Log Out
+                </button>
+            </div>`;
+            
+
             navbar.append(logoutB);
 
             regForm.hide();
@@ -180,6 +194,7 @@ App = {
             $("#index-text").html("Please log in to continue.");
             var regForm =   $('#regForm');
             regForm.show();
+            content.show();
         }
     },
 
@@ -278,7 +293,7 @@ App = {
         localStorage.removeItem('userAccount');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('votedForID');
-        App.account = '0x0';
+     //   App.account = '0x0';
         location.href = 'index.html';
     },
 
